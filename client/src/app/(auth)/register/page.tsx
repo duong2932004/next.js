@@ -1,13 +1,14 @@
-import RegisetrForm from '@/app/(auth)/register/register-form'
+import RegisterForm from '@/app/(auth)/register/register-form'
 
-const RegisetrPage = () => {
+const RegisterPage = () => {
     return (
         <>
             <h1 className='text-xl font-semibold text-center'>Đăng ký</h1>
             <div className='flex justify-center'>
-                <RegisetrForm />
+                <RegisterForm />
             </div>
         </>
     )
 }
-export default RegisetrPage
+
+export default RegisterPage

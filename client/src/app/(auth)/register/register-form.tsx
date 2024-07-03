@@ -1,16 +1,16 @@
-'use client'
+'use client' // Sử dụng directive 'use client' để cho biết rằng mã này sẽ chạy trên client.
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { RegisterBody, RegisterBodyType } from '@/schemaValidations/auth.schema'
-import envConfig from '@/config'
+import { zodResolver } from '@hookform/resolvers/zod' // Import resolver từ zod để tích hợp với react-hook-form
+import { useForm } from 'react-hook-form' // Import hook để sử dụng form
+import { Button } from '@/components/ui/button' // Import component Button từ thư mục components
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form' // Import các thành phần form từ thư mục components
+import { Input } from '@/components/ui/input' // Import thành phần Input từ thư mục components
+import { RegisterBody, RegisterBodyType } from '@/schemaValidations/auth.schema' // Import schema và kiểu dữ liệu để xác thực form
+import envConfig from '@/config' // Import cấu hình môi trường
 
-const RegisetrForm = () => {
+const RegisterForm = () => {
     const form = useForm<RegisterBodyType>({
-        resolver: zodResolver(RegisterBody),
+        resolver: zodResolver(RegisterBody), // Sử dụng zod để xác thực form
         defaultValues: {
             email: '',
             name: '',
@@ -18,6 +18,7 @@ const RegisetrForm = () => {
             confirmPassword: ''
         }
     })
+
     async function onSubmit(values: RegisterBodyType) {
         const result = await fetch(`${envConfig.NEXT_PUBLIC_API_ENDPOINT}/auth/register`, {
             body: JSON.stringify(values),
@@ -26,6 +27,7 @@ const RegisetrForm = () => {
         }).then((res) => res.json())
         console.log(result)
     }
+
     return (
         <Form {...form}>
             <form
@@ -51,7 +53,7 @@ const RegisetrForm = () => {
                     name='email'
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>email</FormLabel>
+                            <FormLabel>Email</FormLabel> {/* Sửa lại label từ 'email' thành 'Email' */}
                             <FormControl>
                                 <Input placeholder='shadcn' type='email' {...field} />
                             </FormControl>
@@ -92,4 +94,5 @@ const RegisetrForm = () => {
         </Form>
     )
 }
-export default RegisetrForm
+
+export default RegisterForm
