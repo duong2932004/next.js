@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import { ThemeProvider } from '@/components/theme-provider'
-import { Inter } from 'next/font/google'
+import { Cookie, Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/header'
 import { Toaster } from '@/components/ui/toaster'
+import AppProvider from './AppProvider'
+import { cookies } from 'next/headers'
 
 const inter = Inter({ subsets: ['vietnamese'] })
 
@@ -17,13 +19,15 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode
 }>) {
+    const cookiStore = cookies()
+    const sessionToken = cookiStore.get('sessionToken')
     return (
         <html lang='en' suppressHydrationWarning>
             <body className={`${inter.className}`}>
                 <Toaster />
                 <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
                     <Header />
-                    {children}
+                    <AppProvider inititalSessionToken={sessionToken?.value}>{children}</AppProvider>
                 </ThemeProvider>
             </body>
         </html>
